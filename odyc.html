@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://www.unpkg.com/odyc@0.0.18/dist/index.global.js"></script>
+    </head>
+
+    <body>
+        <script>
+            const game = odyc.createGame({
+                player: {
+                    sprite: `
+            		.6666...
+                    60606...
+                    66666...
+                    ..116.4
+                    .6166444
+                    ..116.6.
+                    ...166..
+                    ..6.6...
+            		`,
+                    position: [3, 1],
+                },
+                templates: {
+                    x: {
+                        sprite: 3,
+                    },
+                    k: {
+                        sprite: `
+                 ...77...
+                 ..7777..
+                 44444444
+                 44888884
+                 .844444.
+                 .844488.
+                 ..8844..
+                 ...48...
+                 `,
+                    },
+                },
+                map: `
+            xxxxxxxx
+            x......x
+            x......x
+            x......x
+            x......x
+            x...k..x
+            x......x
+            xxxxxxxx
+            `,
+                title: "My Awesome Game",
+            });
+        </script>
+    </body>
+</html>
