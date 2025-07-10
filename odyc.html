@@ -37,6 +37,9 @@
                         ..8844..
                         ...48...
                         `,
+                        onCollide(target) {
+                            target.remove();
+                        },
                     },
                     d: {
                         sprite: `
@@ -51,15 +54,21 @@
                     },
                 },
                 map: `
-                xxxxxxxx
-                x......x
-                x......x
-                x......x
-                x......x
-                x...k..x
-                x....d.x
-                xxxxxxxx
+                xxxxxxxxxxxx
+                x..........x
+                x..........x
+                x..........x
+                x..........x
+                x..........x
+                x..........x
+                x.....d....x
+                x..........x
+                x.......k..x
+                x..........x
+                xxxxxxxxxxxx
                 `,
+                screenWidth: 12,
+                screenHeight: 12,
                 title: "My Awesome Game",
             });
         </script>
