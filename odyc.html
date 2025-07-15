@@ -37,8 +37,16 @@
                         ..8844..
                         ...48...
                         `,
-                        onCollide(target) {
+                        solid: false,
+                        onEnter(target) {
                             target.remove();
+                            game.updateCells(
+                                { symbol: "d" },
+                                {
+                                    solid: false,
+                                    dialog: null,
+                                }
+                            );
                         },
                     },
                     d: {
@@ -51,6 +59,10 @@
                         79555557
                         75555557
                         75555557`,
+                        dialog: "Hmmm... I haven’t had my snack yet!",
+                        onEnter(target) {
+                            target.remove();
+                        },
                     },
                 },
                 map: `
