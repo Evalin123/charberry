@@ -3,15 +3,15 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="https://www.unpkg.com/odyc@0.0.18/dist/index.global.js"></script>
+        <script src="https://www.unpkg.com/odyc@latest/dist/index.global.js"></script>
     </head>
 
     <body>
         <script>
-            const game = odyc.createGame({
-                player: {
-                    sprite: `
-            		.6666...
+            let level = 0;
+            const sprites = {
+                player: `
+                    .6666...
                     60606...
                     66666...
                     ..116.4
@@ -19,24 +19,148 @@
                     ..116.6.
                     ...166..
                     ..6.6...
-            		`,
+                `,
+                strawberry: `
+                    ...77...
+                    ..7777..
+                    44444444
+                    44888884
+                    .844444.
+                    .844488.
+                    ..8844..
+                    ...48...
+                `,
+                door: `
+                    ..7777..
+                    .775577.
+                    77555577
+                    75555557
+                    75555557
+                    79555557
+                    75555557
+                    75555557`,
+            };
+            const levels = [
+                {
+                    map: `
+                    xxxxxxxxxxxx
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x.....d....x
+                    x..........x
+                    x.......k..x
+                    x..........x
+                    xxxxxxxxxxxx`,
                     position: [3, 1],
+                },
+                {
+                    map: `
+                    xxxxxxxxxxxx
+                    x.......d..x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x.k........x
+                    x..........x
+                    xxxxxxxxxxxx`,
+                    postion: [7, 8],
+                },
+                {
+                    map: `
+                    xxxxxxxxxxxx
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..d.......x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x.......k..x
+                    x..........x
+                    x..........x
+                    xxxxxxxxxxxx`,
+                    postion: [2, 5],
+                },
+                {
+                    map: `
+                    xxxxxxxxxxxx
+                    x..........x
+                    x.k........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x........d.x
+                    x..........x
+                    x..........x
+                    x..........x
+                    xxxxxxxxxxxx`,
+                    postion: [6, 2],
+                },
+                {
+                    map: `
+                    xxxxxxxxxxxx
+                    x.......k..x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x...d......x
+                    x..........x
+                    xxxxxxxxxxxx`,
+                    postion: [11, 10],
+                },
+                {
+                    map: `
+                    xxxxxxxxxxxx
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x.......d..x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x..........x
+                    x.k........x
+                    xxxxxxxxxxxx`,
+                    postion: [3, 9],
+                },
+            ];
+
+            const nextLevel = async () => {
+                level++;
+                if (level >= levels.length) {
+                    await game.openDialog("Snack complete! Home time!");
+                    game.end(`YOU WIN!
+                        All berries collected!
+                    `);
+                }
+                game.loadMap(levels[level].map, levels[level].position);
+            };
+
+            const game = odyc.createGame({
+                player: {
+                    sprite: sprites.player,
+                    position: levels[0].position,
                 },
                 templates: {
                     x: {
                         sprite: 3,
                     },
                     k: {
-                        sprite: `
-                        ...77...
-                        ..7777..
-                        44444444
-                        44888884
-                        .844444.
-                        .844488.
-                        ..8844..
-                        ...48...
-                        `,
+                        sprite: sprites.strawberry,
                         solid: false,
                         onEnter(target) {
                             target.remove();
@@ -50,38 +174,18 @@
                         },
                     },
                     d: {
-                        sprite: `
-                        ..7777..
-                        .775577.
-                        77555577
-                        75555557
-                        75555557
-                        79555557
-                        75555557
-                        75555557`,
+                        sprite: sprites.door,
                         dialog: "Hmmm... I haven’t had my snack yet!",
                         onEnter(target) {
                             target.remove();
+                            nextLevel();
                         },
                     },
                 },
-                map: `
-                xxxxxxxxxxxx
-                x..........x
-                x..........x
-                x..........x
-                x..........x
-                x..........x
-                x..........x
-                x.....d....x
-                x..........x
-                x.......k..x
-                x..........x
-                xxxxxxxxxxxx
-                `,
+                map: levels[level].map,
                 screenWidth: 12,
                 screenHeight: 12,
-                title: "My Awesome Game",
+                title: "Snack Quest",
             });
         </script>
     </body>
